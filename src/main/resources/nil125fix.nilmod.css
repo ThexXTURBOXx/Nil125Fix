@@ -1,0 +1,11 @@
+@nilmod {
+    name: "Nil125Fix";
+    description: "Fixes a few things in 1.2.5.";
+    authors: "ThexXTURBOXx";
+    version: "${version}";
+}
+
+entrypoints {
+    premain: "de.femtopedia.nil125fix.Nil125FixPremain";
+    hijack: "de.femtopedia.nil125fix.Nil125FixPremain";
+}
