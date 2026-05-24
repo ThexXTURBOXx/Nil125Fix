@@ -55,7 +55,7 @@ dependencies {
 		transitive = false
 	}
 
-	game nil.minecraft('1.4.7', 'client')
+	game nil.minecraft('1.2.5', 'client')
 
 	mod 'net.minecraftforge:forge:1.2.5-3.4.9.171:client@zip'
 	mod 'libs:NotEnoughItems-Client 1.3.0.1'
