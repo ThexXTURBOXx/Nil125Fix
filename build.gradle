@@ -11,7 +11,8 @@ java {
 }
 
 group = 'de.femtopedia'
-version = '1.0'
+version = project.findProperty('version')
+version = version == null || version == 'unspecified' ? '1.0' : version
 
 base {
 	archivesName = 'Nil125Fix'
