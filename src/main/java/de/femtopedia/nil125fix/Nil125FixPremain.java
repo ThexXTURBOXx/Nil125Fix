@@ -2,6 +2,8 @@ package de.femtopedia.nil125fix;
 
 import java.lang.reflect.Modifier;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -22,8 +24,11 @@ public class Nil125FixPremain implements Runnable {
             return;
         }
 
+        int pkgLength = getClass().getPackage().getName().length() + 1;
         try (ZipFile zip = new ZipFile(meta.get().source)) {
             Enumeration<? extends ZipEntry> entries = zip.entries();
+
+            Map<Class<?>, String> classes = new HashMap<>();
             while (entries.hasMoreElements()) {
                 String name = entries.nextElement().getName();
                 if (!name.endsWith("Transformer.class")) continue;
@@ -36,7 +41,18 @@ public class Nil125FixPremain implements Runnable {
                 if (!ClassTransformer.class.isAssignableFrom(clazz) ||
                     Modifier.isAbstract(clazz.getModifiers())) continue;
 
-                ClassTransformer.register((ClassTransformer) clazz.getDeclaredConstructor().newInstance());
+                classes.put(clazz, clazz.getPackage().getName().substring(pkgLength));
+            }
+
+            Configuration config = new Configuration("config/Nil125Fix.cfg", classes.values());
+            config.saveIfChanged();
+
+            for (Map.Entry<Class<?>, String> e : classes.entrySet()) {
+                if (e.getValue() != null && !config.isEnabled(e.getValue())) {
+                    log.info("Skipping disabled transformer " + e.getKey().getName());
+                    continue;
+                }
+                ClassTransformer.register((ClassTransformer) e.getKey().getDeclaredConstructor().newInstance());
             }
 
             log.info("Applied a few miscellaneous fixes...");
