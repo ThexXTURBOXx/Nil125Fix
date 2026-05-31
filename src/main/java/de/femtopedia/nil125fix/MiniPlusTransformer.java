@@ -1,5 +1,7 @@
 package de.femtopedia.nil125fix;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import nilloader.api.ClassRetransformer;
 import nilloader.api.lib.asm.tree.AbstractInsnNode;
 import nilloader.api.lib.asm.tree.InsnList;
@@ -15,6 +17,10 @@ public abstract class MiniPlusTransformer extends MiniTransformer implements Cla
         InsnList li = new InsnList();
         for (AbstractInsnNode ain : insns) li.add(ain);
         return li;
+    }
+
+    public static Minecraft getMinecraftInstance() {
+        return FMLClientHandler.instance().getClient();
     }
 
 }
