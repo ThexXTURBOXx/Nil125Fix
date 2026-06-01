@@ -51,6 +51,14 @@ public class Configuration {
         return config.getProperty(option, defaultValue);
     }
 
+    public void setEnabled(String option) {
+        set(option, true + "");
+    }
+
+    public void setDisabled(String option) {
+        set(option, false + "");
+    }
+
     public void set(String option, String value) {
         config.setProperty(option, value);
         changed = true;
@@ -61,7 +69,7 @@ public class Configuration {
     }
 
     public void saveIfChanged() throws IOException {
-        if (changed) save();
+        if (isChanged()) save();
     }
 
     public void save() throws IOException {
