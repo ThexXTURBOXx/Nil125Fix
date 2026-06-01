@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Properties;
 
 public class Configuration {
@@ -66,8 +67,9 @@ public class Configuration {
     public void save() throws IOException {
         try (BufferedWriter bw = Files.newBufferedWriter(path);
              PrintWriter pw = new PrintWriter(bw)) {
-            config.entrySet().stream().sorted().forEach(e ->
-                    pw.println(e.getKey() + "=" + e.getValue()));
+            config.entrySet().stream()
+                    .sorted(Comparator.comparing(e -> e.getKey().toString()))
+                    .forEach(e -> pw.println(e.getKey() + "=" + e.getValue()));
             changed = false;
         }
     }
