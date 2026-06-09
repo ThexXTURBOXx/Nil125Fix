@@ -1,5 +1,5 @@
 plugins {
-	id 'com.unascribed.nilgradle' version '1.4.7'
+	id 'com.unascribed.nilgradle' version '1.4.8'
 }
 
 java {
