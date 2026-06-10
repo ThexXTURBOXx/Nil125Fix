@@ -94,7 +94,7 @@ public class WorldGenMarbleTransformer extends MiniPlusTransformer {
     public static class Hooks {
 
         public static boolean isSameChunk(int x1, int z1, int x2, int z2) {
-            return x1 << 4 == x2 << 4 && z1 << 4 == z2 << 4;
+            return x1 >> 4 == x2 >> 4 && z1 >> 4 == z2 >> 4;
         }
 
         public static int getBlockIdSafe(World w, int x, int y, int z, int xOld, int yOld, int zOld) {
