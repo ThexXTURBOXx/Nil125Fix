@@ -1,4 +1,4 @@
-package de.femtopedia.nil125fix.redpower2.marblecrash;
+package de.femtopedia.nil125fix.redpower2.fixmystcraftmarblecrash;
 
 import de.femtopedia.nil125fix.MiniPlusTransformer;
 import net.minecraft.src.World;
@@ -15,24 +15,23 @@ public class WorldGenMarbleTransformer extends MiniPlusTransformer {
     @Override
     protected boolean modifyClassStructure(ClassNode clazz) {
         MethodNode addBlockSafe = new MethodNode(Opcodes.ASM5, Opcodes.ACC_PRIVATE,
-                "addBlockSafe", "(IIIIIII)V", null, null);
+                "addBlockSafe", "(IIIILxd;)V", null, null);
 
         LabelNode Lskip = new LabelNode();
         addBlockSafe.instructions = toInsnList(
+                ALOAD(5),
                 ILOAD(1),
+                ILOAD(2),
                 ILOAD(3),
-                ILOAD(5),
-                ILOAD(7),
-                INVOKESTATIC(hooks(), "isSameChunk", "(IIII)Z"),
+                INVOKESTATIC(hooks(), "isUnloadedChunk", "(Lnet/minecraft/src/World;III)Z"),
                 IFNE(Lskip),
-                RETURN(),
-                Lskip,
                 ALOAD(0),
                 ILOAD(1),
                 ILOAD(2),
                 ILOAD(3),
                 ILOAD(4),
                 INVOKESPECIAL("eloraam/world/WorldGenMarble", "addBlock", "(IIII)V"),
+                Lskip,
                 RETURN()
         );
 
@@ -54,10 +53,7 @@ public class WorldGenMarbleTransformer extends MiniPlusTransformer {
 
             res.jumpBefore();
             ctx.add(
-                    ILOAD(2),
-                    ILOAD(3),
-                    ILOAD(4),
-                    INVOKESTATIC(hooks(), "getBlockIdSafe", "(Lnet/minecraft/src/World;IIIIII)I"),
+                    INVOKESTATIC(hooks(), "getBlockIdSafe", "(Lnet/minecraft/src/World;III)I"),
                     GOTO(Lskip)
             );
 
@@ -77,10 +73,8 @@ public class WorldGenMarbleTransformer extends MiniPlusTransformer {
 
             res.jumpBefore();
             ctx.add(
-                    ILOAD(2),
-                    ILOAD(3),
-                    ILOAD(4),
-                    INVOKESPECIAL("eloraam/world/WorldGenMarble", "addBlockSafe", "(IIIIIII)V"),
+                    ALOAD(1),
+                    INVOKESPECIAL("eloraam/world/WorldGenMarble", "addBlockSafe", "(IIIILnet/minecraft/src/World;)V"),
                     GOTO(Lskip)
             );
 
@@ -93,14 +87,13 @@ public class WorldGenMarbleTransformer extends MiniPlusTransformer {
 
     public static class Hooks {
 
-        public static boolean isSameChunk(int x1, int z1, int x2, int z2) {
-            return x1 >> 4 == x2 >> 4 && z1 >> 4 == z2 >> 4;
+        public static boolean isUnloadedChunk(World w, int x, int y, int z) {
+            return !w.blockExists(x, y, z);
         }
 
-        public static int getBlockIdSafe(World w, int x, int y, int z, int xOld, int yOld, int zOld) {
-            // Do not look into other chunks as they may be unpopulated and cause stack overflows
-            if (!isSameChunk(x, z, xOld, zOld)) return -1;
-            return w.getBlockId(x, y, z);
+        public static int getBlockIdSafe(World w, int x, int y, int z) {
+            // Do not look into unloaded chunks as they may be unpopulated and cause stack overflows
+            return isUnloadedChunk(w, x, y, z) ? -1 : w.getBlockId(x, y, z);
         }
 
     }
