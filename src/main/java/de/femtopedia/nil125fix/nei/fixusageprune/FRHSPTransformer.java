@@ -16,8 +16,8 @@ public class FRHSPTransformer extends MiniPlusTransformer {
 
         ctx.add(
                 INVOKEVIRTUAL("net/minecraft/src/ItemStack", "copy", "()Lnet/minecraft/src/ItemStack;"),
-                ASTORE(1),
-                ALOAD(1)
+                ASTORE(2),
+                ALOAD(2)
         );
     }
 
