@@ -62,6 +62,7 @@ public class EntityListTransformer extends MiniPlusTransformer {
                                    " while trying to register " + newClass.getName() + "!");
             }
         }
+
     }
 
 }

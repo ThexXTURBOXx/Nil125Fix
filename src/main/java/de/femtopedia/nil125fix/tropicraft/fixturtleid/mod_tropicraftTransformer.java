@@ -8,7 +8,7 @@ import nilloader.api.lib.mini.annotation.Patch;
 public class mod_tropicraftTransformer extends MiniPlusTransformer {
 
     @Patch.Method("addAllEntities()V")
-    public void warnIfAlreadyInMap(PatchContext ctx) {
+    public void changeTurtleId(PatchContext ctx) {
         ctx.search(
                 LDC("Turtle")
         ).jumpAfter();
