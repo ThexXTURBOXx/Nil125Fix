@@ -8,6 +8,7 @@ import nilloader.api.lib.mini.annotation.Patch;
 @Patch.Class("factorization.client.render.TileEntityBarrelRenderer")
 public class TileEntityBarrelRendererTransformer extends MiniPlusTransformer {
 
+    @Patch.Method.AffectsControlFlow
     @Patch.Method("doRenderItem(Lfq;DDDFF)V")
     public void renderCustomRenderedItemBlocksCorrectly(PatchContext ctx) {
         LabelNode Lskip = new LabelNode();
@@ -43,6 +44,7 @@ public class TileEntityBarrelRendererTransformer extends MiniPlusTransformer {
         );
     }
 
+    @Patch.Method.AffectsControlFlow
     @Patch.Method("doRenderItem(Lfq;DDDFF)V")
     public void renderDefaultItemBlocksCorrectly(PatchContext ctx) {
         LabelNode Lskip = new LabelNode();
