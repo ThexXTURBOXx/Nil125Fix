@@ -8,13 +8,15 @@ import nilloader.api.lib.mini.annotation.Patch;
 @Patch.Class("buildcraft.factory.TileRefinery")
 public class TileRefineryTransformer extends MiniPlusTransformer {
 
+    @Patch.Method.Optional // Does not exist in BC 3.1.5
     @Patch.Method.AffectsControlFlow
     @Patch.Method("consumeInput(Lbuildcraft/api/liquids/LiquidStack;)Z")
     public void compareQuantities(PatchContext ctx) {
         LabelNode Lskip = new LabelNode();
 
         ctx.search(
-                INVOKEVIRTUAL("buildcraft/api/liquids/LiquidStack", "isLiquidEqual", "(Lbuildcraft/api/liquids/LiquidStack;)Z"),
+                INVOKEVIRTUAL("buildcraft/api/liquids/LiquidStack", "isLiquidEqual",
+                        "(Lbuildcraft/api/liquids/LiquidStack;)Z"),
                 IFEQ(null)
         ).jumpAfter();
         ctx.add(
@@ -36,7 +38,8 @@ public class TileRefineryTransformer extends MiniPlusTransformer {
         Lskip = new LabelNode();
 
         ctx.search(
-                INVOKEVIRTUAL("buildcraft/api/liquids/LiquidStack", "isLiquidEqual", "(Lbuildcraft/api/liquids/LiquidStack;)Z"),
+                INVOKEVIRTUAL("buildcraft/api/liquids/LiquidStack", "isLiquidEqual",
+                        "(Lbuildcraft/api/liquids/LiquidStack;)Z"),
                 IFEQ(null)
         ).jumpAfter();
         ctx.add(
