@@ -26,7 +26,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Build dex-tools with Gradle
+      - name: Build mod with Gradle
         run: ./gradlew -Pversion=1.0.${{ github.run_number }} build
 
       - uses: ncipollo/release-action@v1
