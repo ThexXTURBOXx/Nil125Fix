@@ -27,26 +27,7 @@ public class FastTransferMangerTransformer extends MiniPlusTransformer {
         );
 
         // Skip "Transfer Complete" debugs
-        while (true) {
-            PatchContext.SearchResult res = ctx.search(
-                    GETSTATIC("java/lang/System", "out", "Ljava/io/PrintStream;")
-            );
-            if (!res.isSuccessful()) break;
-
-            Lskip = new LabelNode();
-
-            res.jumpBefore();
-            ctx.add(
-                    GOTO(Lskip)
-            );
-
-            ctx.search(
-                    INVOKEVIRTUAL("java/io/PrintStream", "println", "(Ljava/lang/String;)V")
-            ).jumpAfter();
-            ctx.add(
-                    Lskip
-            );
-        }
+        removePrintlns(ctx);
     }
 
 }
