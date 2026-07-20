@@ -34,7 +34,7 @@ jobs:
 
       - name: Tag release on GitHub
         if: github.ref_type == 'tag'
-        uses: ThexXTURBOXx/mc-publish@dev
+        uses: Kira-NT/mc-publish@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: LICENSE
@@ -46,7 +46,7 @@ jobs:
 
       - name: Publish to CurseForge and Modrinth
         if: github.ref_type == 'tag'
-        uses: ThexXTURBOXx/mc-publish@dev
+        uses: Kira-NT/mc-publish@v3
         with:
           modrinth-id: C1EYXRrX
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -60,8 +60,7 @@ jobs:
           changelog: |
             Full changelog can be found on [GitHub](https://github.com/ThexXTURBOXx/Nil125Fix/releases)
           loaders: nilloader
-          environments: |
-            client
+          environment: client
           game-versions: |
             1.2.4
             1.2.5
