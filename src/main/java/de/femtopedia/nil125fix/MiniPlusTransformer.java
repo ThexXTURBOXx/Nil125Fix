@@ -1,6 +1,8 @@
 package de.femtopedia.nil125fix;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Method;
 import net.minecraft.client.Minecraft;
 import nilloader.api.ClassRetransformer;
 import nilloader.api.lib.asm.tree.AbstractInsnNode;
@@ -11,6 +13,8 @@ import nilloader.api.lib.mini.MiniTransformer;
 import nilloader.api.lib.mini.PatchContext;
 
 public abstract class MiniPlusTransformer extends MiniTransformer implements ClassRetransformer {
+
+    private static MethodHandle getMinecraftInstance;
 
     protected final String hooks() {
         return getClass().getName().replace('.', '/') + "$Hooks";
@@ -59,7 +63,17 @@ public abstract class MiniPlusTransformer extends MiniTransformer implements Cla
     }
 
     public static Minecraft getMinecraftInstance() {
-        return FMLClientHandler.instance().getClient();
+        try {
+            if (getMinecraftInstance == null) {
+                Class<?> ModLoader = Class.forName("ModLoader");
+                Method m = ModLoader.getMethod("getMinecraftInstance");
+                MethodHandles.Lookup lookup = MethodHandles.lookup();
+                getMinecraftInstance = lookup.unreflect(m);
+            }
+            return (Minecraft) getMinecraftInstance.invoke();
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
     }
 
 }
