@@ -10,14 +10,18 @@ Every fix can be disabled/enabled individually in the config.
 - [General] Remove/skip debug logs from the console
 - [Vanilla] Fix many rendering bugs on some Intel graphics driver versions (credits to [TheMasterCaver](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1294926-themastercavers-world?comment=294))
 - [Vanilla] Apply Lights Out and Antifreeze patches to fix lighting bugs (credits to [last_username](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1282658-1-2-5-lights-out-antifreeze-two-mods-to-fix))
+- [Vanilla] Fix statistics/achievements load and reset bugs
 - [Forge/ML] Add warnings if two entities share the same ID
 - [Forge] Tidy up unresolved ore recipes (important when NEI is also installed as these lead to crashes)
 - [Better Dungeons] Add annoying warning when the mod is not properly installed
 - [Buildcraft 3] Fix oil dupe using refinery
+- [Enchanting Plus] Fix log spam when using the enchanting table
 - [Factorization] Fix item rendering on barrels
+- [Inventory Tweaks] Fix shortcuts instantly triggering upon opening GUIs
 - [NEI] Fix pruning item stacks to only a single remaining item when clicking "Show Usages" on them
 - [NEI] Made search field better (<kbd>Ctrl</kbd>+<kbd>A</kbd>, arrow keys etc. are now working!)
-- [RedPower 2] Fix crashes in certain Mystcraft dimensions due to faultry Marble generation
+- [Single Player Commands/Player API] Fix <kbd>Tab</kbd> autocompletion in singleplayer chats
+- [RedPower 2] Fix crashes in certain Mystcraft dimensions due to faulty Marble generation
 - [Rei's Minimap] Fix sporadic internal crash
 - [Tropicraft] Change hardcoded turtle ID to avoid chunk resets with Mo' Creatures
 
