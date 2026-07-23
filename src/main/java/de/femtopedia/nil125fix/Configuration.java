@@ -30,7 +30,7 @@ public class Configuration {
         }
 
         for (String key : keys)
-            config.setProperty(key, true + "");
+            config.setProperty(key, (!Nil125FixPremain.DISABLED_BY_DEFAULT.contains(key)) + "");
 
         Properties tmp = new Properties();
         tmp.load(Files.newBufferedReader(this.path));

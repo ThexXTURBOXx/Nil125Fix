@@ -1,10 +1,13 @@
 package de.femtopedia.nil125fix;
 
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import nilloader.api.ClassTransformer;
@@ -15,6 +18,9 @@ import nilloader.api.NilModList;
 public class Nil125FixPremain implements Runnable {
 
     public static final NilLogger log = NilLogger.get("Nil125Fix");
+
+    public static final Set<String> DISABLED_BY_DEFAULT = new HashSet<>(Arrays.asList(
+    ));
 
     @Override
     public void run() {
