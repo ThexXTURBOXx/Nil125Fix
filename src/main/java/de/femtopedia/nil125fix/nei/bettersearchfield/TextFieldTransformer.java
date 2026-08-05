@@ -10,12 +10,17 @@ import nilloader.api.lib.asm.Opcodes;
 import nilloader.api.lib.asm.Type;
 import nilloader.api.lib.asm.tree.ClassNode;
 import nilloader.api.lib.asm.tree.FieldNode;
+import nilloader.api.lib.asm.tree.LabelNode;
+import nilloader.api.lib.asm.tree.MethodNode;
 import nilloader.api.lib.mini.PatchContext;
+import nilloader.api.lib.mini.PatchContext.SearchResult;
 import nilloader.api.lib.mini.annotation.Patch;
 import org.lwjgl.input.Keyboard;
 
 @Patch.Class("codechicken.nei.TextField")
 public class TextFieldTransformer extends MiniPlusTransformer {
+
+    private static boolean HAS_FOCUS_METHODS = true;
 
     @Override
     protected boolean modifyClassStructure(ClassNode clazz) {
@@ -25,6 +30,36 @@ public class TextFieldTransformer extends MiniPlusTransformer {
         clazz.fields.add(new FieldNode(Opcodes.ASM5, Opcodes.ACC_PRIVATE,
                 "previousKeyboardRepeatEnabled", Type.BOOLEAN_TYPE.getDescriptor(),
                 null, 0));
+
+        if (clazz.methods.stream().noneMatch(m -> m.name.equals("setFocus"))) {
+            // NEI 1.2.x does not have this method at all
+            MethodNode setFocus = new MethodNode(Opcodes.ASM5, Opcodes.ACC_PUBLIC,
+                    "setFocus", "(Z)V", null, null);
+            setFocus.instructions = toInsnList(
+                    ALOAD(0),
+                    ILOAD(1),
+                    PUTFIELD("codechicken/nei/TextField", "focused", "Z"),
+                    RETURN()
+            );
+            clazz.methods.add(setFocus);
+
+            HAS_FOCUS_METHODS = false;
+        }
+
+        if (clazz.methods.stream().noneMatch(m -> m.name.equals("focused"))) {
+            // NEI 1.2.x does not have this method at all
+            MethodNode focused = new MethodNode(Opcodes.ASM5, Opcodes.ACC_PUBLIC,
+                    "focused", "()Z", null, null);
+            focused.instructions = toInsnList(
+                    ALOAD(0),
+                    GETFIELD("codechicken/nei/TextField", "focused", "Z"),
+                    IRETURN()
+            );
+            clazz.methods.add(focused);
+
+            HAS_FOCUS_METHODS = false;
+        }
+
         return true; // don't know if absolutely necessary, let's just do it...
     }
 
@@ -52,6 +87,34 @@ public class TextFieldTransformer extends MiniPlusTransformer {
                 INVOKESTATIC(hooks(), "drawNewField",
                         "(Lcodechicken/nei/TextField;Lnet/minecraft/src/GuiTextField;)V"),
                 RETURN()
+        );
+    }
+
+    @Patch.Method.AffectsControlFlow
+    @Patch.Method("onGuiClick(II)V")
+    public void propagateFocusManagement(PatchContext ctx) {
+        if (HAS_FOCUS_METHODS) return;
+
+        SearchResult res = ctx.search(
+                ALOAD(0),
+                ICONST_0(),
+                PUTFIELD("codechicken/nei/TextField", "focused", "Z")
+        );
+        if (!res.isSuccessful()) return; // Most likely (hopefully) on NEI 1.3
+
+        LabelNode Lskip = new LabelNode();
+
+        res.jumpBefore();
+        ctx.add(
+                ALOAD(0),
+                ICONST_0(),
+                INVOKEVIRTUAL("codechicken/nei/TextField", "setFocus", "(Z)V"),
+                GOTO(Lskip)
+        );
+
+        res.jumpAfter();
+        ctx.add(
+                Lskip
         );
     }
 
@@ -233,10 +296,12 @@ public class TextFieldTransformer extends MiniPlusTransformer {
 
         public static boolean propagateSetFocus(TextField thiz, GuiTextField field,
                                                 boolean previousKeyboardRepeatEnabled, boolean focus) {
-            if (focus) {
-                LayoutManager.setInputFocused(thiz);
-            } else if (LayoutManager.getInputFocused() == thiz) {
-                LayoutManager.setInputFocused(null);
+            if (HAS_FOCUS_METHODS) {
+                if (focus) {
+                    LayoutManager.setInputFocused(thiz);
+                } else if (LayoutManager.getInputFocused() == thiz) {
+                    LayoutManager.setInputFocused(null);
+                }
             }
 
             final boolean previousFocus = field.func_50025_j();
@@ -246,10 +311,10 @@ public class TextFieldTransformer extends MiniPlusTransformer {
                 if (focus) {
                     previousKeyboardRepeatEnabled = Keyboard.areRepeatEventsEnabled();
                     Keyboard.enableRepeatEvents(true);
-                    thiz.gainFocus();
+                    if (HAS_FOCUS_METHODS) thiz.gainFocus();
                 } else {
                     Keyboard.enableRepeatEvents(previousKeyboardRepeatEnabled);
-                    thiz.loseFocus();
+                    if (HAS_FOCUS_METHODS) thiz.loseFocus();
                 }
             }
 
