@@ -19,6 +19,7 @@ Every fix can be disabled/enabled individually in the config.
 - [Equivalent Exchange 2] Fix built-in Buildcraft addon for Buildcraft 3
 - [Factorization] Fix item rendering on barrels
 - [Inventory Tweaks] Fix shortcuts instantly triggering upon opening GUIs
+- [Iron Chest] Fix race condition when trying to upgrade a double chest
 - [MAtmos] Use mirror for expansion database
 - [NEI] Fix pruning item stacks to only a single remaining item when clicking "Show Usages" on them
 - [NEI] Made search field better (<kbd>Ctrl</kbd>+<kbd>A</kbd>, arrow keys etc. are now working!)
