@@ -34,10 +34,10 @@ Every fix can be disabled/enabled individually in the config.
 **A**: First of all: you can install NilLoader alongside any other loader (including Forge, ModLoader etc.)! A Nilmod is a mod that is loaded by [NilLoader](https://git.sleeping.town/Nil/NilLoader). You should [install NilLoader](https://git.sleeping.town/Nil/NilLoader#using-nilloader) first and then put NilFix in either the usual `mods` folder or in the dedicated `nilmods` folder (recommended!) in your Minecraft instance.
 
 **Q**: I have found a bug in 1.2.5 itself or some mod. Can you please fix it?  
-**A**: Well, I will try my best! Please report it over at the [mod's issues](https://github.com/ThexXTURBOXx/Nil125Fix/issues).
+**A**: Well, I will try my best! Please report it over at the [mod's issues](https://github.com/ThexXTURBOXx/NilFix/issues).
 
 **Q**: I have found a bug in NilFix itself. Can you please fix it?  
-**A**: That's unfortunate! Please report it over at the [mod's issues](https://github.com/ThexXTURBOXx/Nil125Fix/issues) and I will fix it, of course.
+**A**: That's unfortunate! Please report it over at the [mod's issues](https://github.com/ThexXTURBOXx/NilFix/issues) and I will fix it, of course.
 
 **Q**: I don't have some of these mods installed. Will this mod still work?  
 **A**: Yes, NilLoader only applies my fixes if the corresponding mods are present.

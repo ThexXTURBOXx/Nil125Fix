@@ -29,7 +29,7 @@ public class MAtExpansionFetcherTransformer extends MiniPlusTransformer {
             String s = url.toString();
             if (s.contains("ha3extra.googlecode.com/svn/trunk/matmos/")) {
                 s = s.replace("ha3extra.googlecode.com/svn/trunk/matmos/",
-                        "raw.githubusercontent.com/ThexXTURBOXx/Nil125Fix/main/mirror/matmos/");
+                        "raw.githubusercontent.com/ThexXTURBOXx/NilFix/tree/1.2.5/mirror/matmos/");
                 s = s.replace("http://", "https://");
             }
 
