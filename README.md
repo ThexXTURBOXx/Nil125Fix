@@ -21,6 +21,7 @@ Every fix can be disabled/enabled individually in the config.
 - [Inventory Tweaks] Fix shortcuts instantly triggering upon opening GUIs
 - [Iron Chest] Fix race condition when trying to upgrade a double chest
 - [MAtmos] Use mirror for expansion database
+- [More Creeps and Weirdos] Fix health bars being randomised
 - [NEI] Fix pruning item stacks to only a single remaining item when clicking "Show Usages" on them
 - [NEI] Made search field better (<kbd>Ctrl</kbd>+<kbd>A</kbd>, arrow keys etc. are now working!)
 - [Single Player Commands/Player API] Fix <kbd>Tab</kbd> autocompletion in singleplayer chats
