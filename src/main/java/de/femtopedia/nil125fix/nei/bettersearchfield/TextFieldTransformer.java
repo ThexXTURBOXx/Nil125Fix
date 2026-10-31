@@ -17,6 +17,9 @@ import nilloader.api.lib.mini.PatchContext.SearchResult;
 import nilloader.api.lib.mini.annotation.Patch;
 import org.lwjgl.input.Keyboard;
 
+import static de.femtopedia.nil125fix.PlusTransformer.getMinecraftInstance;
+import static de.femtopedia.nil125fix.PlusTransformer.toInsnList;
+
 @Patch.Class("codechicken.nei.TextField")
 public class TextFieldTransformer extends MiniPlusTransformer {
 

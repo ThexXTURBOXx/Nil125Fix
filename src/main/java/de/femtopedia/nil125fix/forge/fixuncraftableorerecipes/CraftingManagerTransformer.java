@@ -12,6 +12,8 @@ import net.minecraft.src.IRecipe;
 import nilloader.api.lib.mini.PatchContext;
 import nilloader.api.lib.mini.annotation.Patch;
 
+import static de.femtopedia.nil125fix.PlusTransformer.getMinecraftInstance;
+
 @Patch.Class("net.minecraft.src.CraftingManager")
 public class CraftingManagerTransformer extends MiniPlusTransformer {
 

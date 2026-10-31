@@ -8,6 +8,8 @@ import net.minecraft.client.Minecraft;
 import nilloader.api.lib.mini.PatchContext;
 import nilloader.api.lib.mini.annotation.Patch;
 
+import static de.femtopedia.nil125fix.PlusTransformer.getMinecraftInstance;
+
 @Patch.Class("mod_betterDungeons")
 public class mod_betterDungeonsTransformer extends MiniPlusTransformer {
 

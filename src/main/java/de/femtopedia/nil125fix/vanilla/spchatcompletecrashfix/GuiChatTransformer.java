@@ -9,6 +9,8 @@ import nilloader.api.lib.asm.tree.LabelNode;
 import nilloader.api.lib.mini.PatchContext;
 import nilloader.api.lib.mini.annotation.Patch;
 
+import static de.femtopedia.nil125fix.PlusTransformer.getMinecraftInstance;
+
 @Patch.Class("net.minecraft.src.GuiChat")
 public class GuiChatTransformer extends MiniPlusTransformer {
 

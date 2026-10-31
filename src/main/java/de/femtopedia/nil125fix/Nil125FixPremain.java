@@ -17,6 +17,7 @@ import nilloader.api.NilModList;
 
 public class Nil125FixPremain implements Runnable {
 
+    public static final String MOD_ID = "nil125fix";
     public static final NilLogger log = NilLogger.get("Nil125Fix");
 
     public static final Set<String> DISABLED_BY_DEFAULT = new HashSet<>(Arrays.asList(
@@ -25,7 +26,7 @@ public class Nil125FixPremain implements Runnable {
 
     @Override
     public void run() {
-        Optional<NilMetadata> meta = NilModList.getById("nil125fix");
+        Optional<NilMetadata> meta = NilModList.getById(MOD_ID);
         if (!meta.isPresent()) {
             log.error("Nil125Fix cannot find itself! AAAAHHHH!");
             return;
